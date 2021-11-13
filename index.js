@@ -50,7 +50,6 @@ async function run() {
         app.post("/products", async(req, res) => {
             const product = req.body
             const result = await productsCollection.insertOne(product)
-            console.log(result.insertedId)
             res.json(result)
         })
 
@@ -59,7 +58,6 @@ async function run() {
                 const product = req.params.productId
                 const query = { _id: ObjectId(product) }
                 const result = await productsCollection.deleteOne(query)
-                console.log(result)
                 res.json(result)
             })
             // Insert User
@@ -81,12 +79,10 @@ async function run() {
         })
         app.put("/admin", async(req, res) => {
             const email = req.body.userEmail
-            console.log(email)
             const filter = { userEmail: email }
             const updateDoc = { $set: { role: "Admin" } }
             const result = await usersCollection.updateOne(filter, updateDoc)
             res.json(result)
-            console.log(result)
         })
         app.delete("/orders/:orderId", async(req, res) => {
             const orderId = req.params.orderId
