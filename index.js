@@ -98,13 +98,13 @@ async function run() {
             const result = await ordersCollection.find({}).toArray()
             res.send(result)
         })
-        app.put("/orders", async(req, res) => {
-            const orderId = req.query.id
+        app.put("/orders/:orderId", async(req, res) => {
+            const orderId = req.params.orderId
             const update = req.body.status
             const filter = { _id: ObjectId(orderId) }
             const updateDoc = { $set: { status: update } }
             const result = await ordersCollection.updateOne(filter, updateDoc)
-            res.send(result)
+            res.json(result)
         })
         app.get("/orders", async(req, res) => {
             const find = req.query.email
